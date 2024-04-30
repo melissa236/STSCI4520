@@ -19,6 +19,7 @@ for(j in 2:length(fnames)){
   filename<- basename(fnames[j])
   state<- str_extract(filename, "(?<=-)[A-Z]{2}" )
   station_name<- str_extract(filename, "(?<=-)[A-Za-z0-9_]+(?=_SSE\\.txt$)")
+  rbind(dat, df)
   
 }
 #set column names

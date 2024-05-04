@@ -39,5 +39,5 @@ colnames(dat) <- toupper(colnames(dat))
 #convert date
 dat$LST_DATE <- as.Date(as.character(dat$LST_DATE), format = "%Y%m%d")
 #Clean data
-dat[dat == -9999] <- NA
+dat[dat == -9 | dat == -99 | dat == -999 | dat == -9999] <- NA
 

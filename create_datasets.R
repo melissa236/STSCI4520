@@ -10,7 +10,7 @@ filename<- basename(fnames[1])
 state<- str_extract(filename, "(?<=-)[A-Z]{2}" )
 #filename <- "CRND0103-2013-AL_Gainesville_2_NE.txt"
 station_name<- str_extract(filename, "(?<=-[A-Z]{2}_)([A-Za-z0-9_]+)(?=\\.txt)") #doesn't work
-#station_name <- str_replace_all(station_name, "_", " ")
+station_name <- str_replace_all(station_name, "_", " ")
 dat$state<- state
 dat$station_name<- station_name
 
@@ -20,8 +20,9 @@ for (j in 2:length(fnames)) {
   df <- read.table(fnames[j], header = FALSE)
   filename <- basename(fnames[j])
   df$state <- str_extract(filename, "(?<=-)[A-Z]{2}")
-  df$station_name <- str_extract(filename, "(?<=-[A-Z]{2}_)([A-Za-z0-9_]+)(?=\\.txt)")
-  df$station_name <- str_replace_all(station_name, "_", " ")
+  station_name <- str_extract(filename, "(?<=-[A-Z]{2}_)([A-Za-z0-9_]+)(?=\\.txt)")
+  station_name <- str_replace_all(station_name, "_", " ")
+  df$station_name <- station_name
   dat <- rbind(dat, df)  
 }
 
@@ -40,4 +41,6 @@ colnames(dat) <- toupper(colnames(dat))
 dat$LST_DATE <- as.Date(as.character(dat$LST_DATE), format = "%Y%m%d")
 #Clean data
 dat[dat == -9 | dat == -99 | dat == -999 | dat == -9999] <- NA
+save(dat,file = "full_climate_data.RData")
+load("full_climate_data.RData")
 

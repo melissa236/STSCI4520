@@ -10,7 +10,7 @@ filename<- basename(fnames[1])
 state<- str_extract(filename, "(?<=-)[A-Z]{2}" )
 #filename <- "CRND0103-2013-AL_Gainesville_2_NE.txt"
 station_name<- str_extract(filename, "(?<=-[A-Z]{2}_)([A-Za-z0-9_]+)(?=\\.txt)") #doesn't work
-station_name <- str_replace_all(station_name, "_", " ")
+#station_name <- str_replace_all(station_name, "_", " ")
 dat$state<- state
 dat$station_name<- station_name
 

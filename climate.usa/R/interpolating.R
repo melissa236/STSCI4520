@@ -5,7 +5,7 @@ library(maps)
 create_usa_grid<- function(resolution = 1){
 
   #map data for contiguous USA
-  usa_map<- map("usa", fill = FALSE, plot = FALSE)
+  usa_map<- map("usa", fill = FALSE, plot = TRUE)
   usa_polygon<- usa_map$range
   #extract longitude and latitude
   x_range<- seq(usa_polygon[1], usa_polygon[2], by = resolution)
@@ -32,6 +32,12 @@ interpolate_to_grid <- function(grid_points, variable) {
 
   grid_points[[variable]] <- interpolated_values
   return(grid_points)
+}
+
+interpolate_to_grid2<- function(grid_points, variable){
+  y<- dat[,"T_DAILY_AVG"]
+  locs<-as.matrix(dat[,c("LONGITUDE","LATITUDE")])
+  x<-model.matrix(~ > , data = ames_sub)
 }
 
 grid_points <- create_usa_grid(resolution = 1)

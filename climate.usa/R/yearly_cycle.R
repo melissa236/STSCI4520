@@ -2,7 +2,9 @@ library(dplyr)
 
 yearly_cycle<- function(station){
   df<- dat |>
+    #filter by station name
     filter(STATION_NAME == station)|>
+    #extract year from lst_date and calculate day of year 
     mutate(
       year = substr(as.character(LST_DATE), 1, 4) ,
            start_of_year = as.Date(paste0(year, "-01-01")),

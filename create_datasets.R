@@ -41,6 +41,10 @@ colnames(dat) <- toupper(colnames(dat))
 dat$LST_DATE <- as.Date(as.character(dat$LST_DATE), format = "%Y%m%d")
 #Clean data
 dat[dat == -9 | dat == -99 | dat == -999 | dat == -9999] <- NA
+dat<- dat |>
+  select(WBANNO, STATE, STATION_NAME, LST_DATE, CRX_VN, LONGITUDE, LATITUDE,
+  T_DAILY_MAX, T_DAILY_MIN,T_DAILY_AVG, T_DAILY_MEAN, P_DAILY_CALC,
+  SOLARAD_DAILY)
 save(dat,file = "full_climate_data.RData")
 load("full_climate_data.RData")
 

@@ -17,29 +17,16 @@ create_usa_grid<- function(resolution = 1){
 }
 
 
-interpolate_to_grid <- function(grid_points, variable) {
 
-  interpolated_values <- numeric(nrow(grid_points))
-  for (i in 1:nrow(grid_points)) {
-    point <- grid_points[i, ]
-    #calculate distance
-    distances <- sqrt((dat$LONGITUDE - point$LONGITUDE)^2 + (dat$LATITUDE - point$LATITUDE)^2)
-    #idw formula
-    weights <- ifelse(distances > 0, 1 / (distances^2), 0)
-    weighted_values <- weights * dat[[variable]]
-    interpolated_values[i] <- sum(weighted_values, na.rm = TRUE) / sum(weights, na.rm = TRUE)
-  }
-
-  grid_points[[variable]] <- interpolated_values
-
-  return(filtered_grid_points)
-}
-
-
-interpolate_to_grid2<- function(grid_points, variable){
-  y<- dat[,"T_DAILY_AVG"]
-  locs<-as.matrix(dat[,c("LONGITUDE","LATITUDE")])
-  x<-model.matrix(~ > , data = ames_sub)
+interpolate_to_grid<- function(grid_points, model_fit){
+  
+ avg_p<- mean(dat$P_DAILY_CALC, na.rm = TRUE)
+ avg_sol<- mean(dat$SOLARAD_DAILY, na.rm = TRUE)
+ row1<- c(1, avg_p, avg_sol ) 
+ X_pred<- as.data.frame(matrix(rep(row1, times =2500),nrow =2500, byrow =TRUE))
+ colnames(X_pred)<- c("(Intercept)", "AVG_P_DAILY_CALC", "AVG_SOLARAD_MIN")
+ predictions<- predictions(lms, locs_pred = grid_points,
+                           X_pred = X_pred, covfun_name = "matern_sphere")
 }
 
 usa_map <- map_data("state")

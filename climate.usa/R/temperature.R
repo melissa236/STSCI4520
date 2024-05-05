@@ -4,8 +4,7 @@
 #'
 #'
 #'
-library(tidyverse)
-library(lubridate)
+
 
 temp_trend <- function(data, date_column, temp_column, degree = 2) {
 

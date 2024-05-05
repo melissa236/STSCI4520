@@ -1,4 +1,18 @@
-library(dplyr)
+#' Estimate the yearly cycle for one weather station
+#'
+#' Estimate the expected temperature on each day of the year
+#'for one USCRN/USRCRN weather station. 
+#'
+#' @param station station name contains the city name, station number, and station direction
+#' @return a data frame with the following components:
+#' \itemize{
+#' \item \code{type} data frame with column for day number (1-365), and a column for the expected average temperature on each day. 
+#' }
+#'@examples
+#' #get yearly cycle for weather station Asheville 13 S
+#' station_info<- yearly_cycle("Asheville 13 S")
+#' print(station_info)
+#' @export
 
 yearly_cycle<- function(station){
   df<- dat |>
@@ -18,5 +32,5 @@ yearly_cycle<- function(station){
     
 }
 
-View(yearly_cycle("Asheville 13 S"))
+
 

@@ -31,14 +31,24 @@ interpolate_to_grid <- function(grid_points, variable) {
   }
 
   grid_points[[variable]] <- interpolated_values
-  return(grid_points)
+
+  return(filtered_grid_points)
 }
+
+usa_map <- map_data("state")
+usa_map <- usa_map[!usa_map$region %in% c("alaska", "hawaii"),]
 
 grid_points <- create_usa_grid(resolution = 1)
 interpolation<- interpolate_to_grid(grid_points, "T_DAILY_AVG")
-ggplot(interpolation, aes(x = LONGITUDE, y = LATITUDE, color = T_DAILY_AVG)) +
-  geom_point() +
-  scale_color_viridis_c()
+
+ggplot() +
+  geom_polygon(data = usa_map, aes(x = long, y = lat, group = group), fill = "gray", color = "white") +
+  geom_point(data = interpolation, aes(x = LONGITUDE, y = LATITUDE, color = T_DAILY_AVG), size = 3) +
+  scale_color_viridis_c() +
+  labs(title = "Interpolated Temperature Data Over the USA",
+       x = "Longitude", y = "Latitude") +
+  theme_minimal()
+
 
 
 

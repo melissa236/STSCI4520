@@ -35,7 +35,10 @@ interpolate_to_grid <- function(grid_points, variable) {
 }
 
 grid_points <- create_usa_grid(resolution = 1)
-interpolate_to_grid(grid_points, "T_DAILY_AVG")
+interpolation<- interpolate_to_grid(grid_points, "T_DAILY_AVG")
+ggplot(interpolation, aes(x = LONGITUDE, y = LATITUDE, color = T_DAILY_AVG)) +
+  geom_point() +
+  scale_color_viridis_c()
 
 
 

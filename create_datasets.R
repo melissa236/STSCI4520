@@ -45,6 +45,5 @@ dat<- dat |>
   select(WBANNO, STATE, STATION_NAME, LST_DATE, CRX_VN, LONGITUDE, LATITUDE,
   T_DAILY_MAX, T_DAILY_MIN,T_DAILY_AVG, T_DAILY_MEAN, P_DAILY_CALC,
   SOLARAD_DAILY)
-save(dat,file = "full_climate_data.RData")
-load("full_climate_data.RData")
+
 

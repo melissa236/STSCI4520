@@ -19,14 +19,14 @@ create_usa_grid<- function(resolution = 1){
   return(grid_points)
 }
 
-grid<-create_usa_grid(resolution = 1)
-
-station_data<- dat |>
-  group_by(STATION_NAME)|>
-  na.omit()|>
-  summarise(LONGITUDE = mean(LONGITUDE),
-            LATITUDE = mean(LATITUDE),
-            T_DAILY_AVG = mean(T_DAILY_AVG))
+# grid<-create_usa_grid(resolution = 1)
+# 
+# station_data<- dat |>
+#   group_by(STATION_NAME)|>
+#   na.omit()|>
+#   summarise(LONGITUDE = mean(LONGITUDE),
+#             LATITUDE = mean(LATITUDE),
+#             T_DAILY_AVG = mean(T_DAILY_AVG))
 
 
 interpolate_to_grid<- function(station_data, grid_points, variable){
@@ -45,8 +45,8 @@ interpolate_to_grid<- function(station_data, grid_points, variable){
 
 }
 
-predictions<-interpolate_to_grid(grid_points = grid,
-                                 station_data = station_data, variable = "T_DAILY_AVG")
+#predictions<-interpolate_to_grid(grid_points = grid,
+                                # station_data = station_data, variable = "T_DAILY_AVG")
 
 
 create_map<- function(predictions, grid_points){
@@ -64,7 +64,7 @@ create_map<- function(predictions, grid_points){
   map("usa", fill = FALSE, plot = TRUE, add = TRUE)
 }
 
-create_map(predictions, grid_points = grid)
+#create_map(predictions, grid_points = grid)
 
 
 

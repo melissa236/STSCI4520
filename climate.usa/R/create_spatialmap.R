@@ -15,7 +15,7 @@ create_usa_grid<- function(resolution = 1){
   x_range<- seq(usa_polygon[1], usa_polygon[2], by = resolution)
   y_range<- seq(usa_polygon[3], usa_polygon[4], by = resolution)
   #generate grid points
-  grid_points<- expand.grid(LONGITUDE = y_range, LATITUDE = x_range)
+  grid_points<- expand.grid(LONGITUDE = x_range, LATITUDE = y_range)
   coords<- matrix(c(usa_polygon[1], usa_polygon[3], 
                    usa_polygon[1], usa_polygon[4], 
                   usa_polygon[2], usa_polygon[4], 
@@ -85,10 +85,10 @@ create_map<- function(predictions, grid_points){
   num_lat<- length(unique(grid_points$LATITUDE))
   num_lon<- length(unique(grid_points$LONGITUDE))
   
-  loc_matrix <- matrix(predictions, nrow = num_lon, ncol = num_lat, byrow = TRUE)
+  loc_matrix <- t(matrix(predictions, nrow = num_lat, ncol = num_lon, byrow = TRUE))
   
-  image.plot(x = unique(grid_points$LATIUDE), 
-             y = unique(grid_points$LONGITUDE),
+  image.plot(x = unique(grid_points$LONGITUDE), 
+             y = unique(grid_points$LATITUDE),
              z = loc_matrix,
              xlab = "Longitude", 
              ylab = "Latitude", 

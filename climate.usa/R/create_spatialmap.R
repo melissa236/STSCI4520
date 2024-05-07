@@ -14,59 +14,20 @@ create_usa_grid<- function(resolution = 1){
   x_range<- seq(usa_polygon[1], usa_polygon[2], by = resolution)
   y_range<- seq(usa_polygon[3], usa_polygon[4], by = resolution)
   #generate grid points
-<<<<<<< HEAD
-  grid_points<- as.matrix(expand.grid(LONGITUDE = x_range, LATITUDE = y_range))
- 
-=======
   grid_points<- expand.grid(LONGITUDE = x_range, LATITUDE = y_range)
-  coords<- matrix(c(usa_polygon[1], usa_polygon[3],
-                   usa_polygon[1], usa_polygon[4],
-                  usa_polygon[2], usa_polygon[4],
-                  usa_polygon[2], usa_polygon[3],
-                  usa_polygon[1], usa_polygon[3]),
-                  ncol = 2, byrow = TRUE)
-  #usa_boundary<- st_polygon(list(coords))
-
-  # Convert grid points to a spatial object
-  # grid_points_sf <- st_as_sf(all_grid_points,
-  #                            coords = c("LONGITUDE", "LATITUDE"), crs = 4326)
-  #
-  # # Check which points fall within the boundary of the contiguous USA
-  # within_boundary <- st_within(grid_points_sf, usa_boundary)
-  #
-  # # Filter out grid points that are within the boundary
-  # grid_points<- all_grid_points[within_boundary, ]
-  #
-
-
-
->>>>>>> 55568f4103547a8567502fe6d47170967cfe18ad
+ 
   return(grid_points)
 }
 
-#grid<-create_usa_grid(resolution = 1)
+grid<-create_usa_grid(resolution = 1)
 
-<<<<<<< HEAD
 station_data<- dat |>
   group_by(STATION_NAME)|>
   na.omit()|>
-  summarise(LONGITUDE = mean(LONGITUDE), 
+  summarise(LONGITUDE = mean(LONGITUDE),
             LATITUDE = mean(LATITUDE),
             T_DAILY_AVG = mean(T_DAILY_AVG))
-=======
-#y<- dat[,"T_DAILY_AVG"]
-#locs<-as.matrix(dat[,c("LONGITUDE","LATITUDE")])
-#x<-model.matrix(~ LONGITUDE + LATITUDE, data = dat)
 
-
-
-#station_data<- dat |>
-  #group_by(STATION_NAME)|>
-  #na.omit()|>
-  #summarise(LONGITUDE = mean(LONGITUDE),
-            #LATITUDE = mean(LATITUDE),
-            #T_DAILY_AVG = mean(T_DAILY_AVG))
->>>>>>> 55568f4103547a8567502fe6d47170967cfe18ad
 
 interpolate_to_grid<- function(station_data, grid_points, variable){
   y<-as.matrix(station_data[,variable])
@@ -84,23 +45,10 @@ interpolate_to_grid<- function(station_data, grid_points, variable){
 
 }
 
-<<<<<<< HEAD
-predictions<-interpolate_to_grid(grid_points = grid, 
+predictions<-interpolate_to_grid(grid_points = grid,
                                  station_data = station_data, variable = "T_DAILY_AVG")
 
 
-=======
-#predictions<-interpolate_to_grid(grid_points = grid,
-                                 #station_data = station_data, variable = "T_DAILY_AVG")
-#usa_map <- map_data("state")
-#usa_map <- usa_map[!usa_map$region %in% c("alaska", "hawaii"),]
-
-
-#grid_points <- create_usa_grid(resolution = 1)
-
-
-
->>>>>>> 55568f4103547a8567502fe6d47170967cfe18ad
 create_map<- function(predictions, grid_points){
   num_lat<- length(unique(grid_points$LATITUDE))
   num_lon<- length(unique(grid_points$LONGITUDE))
@@ -116,7 +64,7 @@ create_map<- function(predictions, grid_points){
   map("usa", fill = FALSE, plot = TRUE, add = TRUE)
 }
 
-#create_map(predictions, grid_points = grid)
+create_map(predictions, grid_points = grid)
 
 
 

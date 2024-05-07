@@ -4,6 +4,7 @@
 #'for one USCRN/USRCRN weather station. 
 #'
 #' @param station station name contains the city name, station number, and station direction
+#' @param year year in which the expected temperature on each day will be estimated
 #' @return a data frame with the following components:
 #' \itemize{
 #' \item \code{type} data frame with column for day number (1-365), and a column for the expected average temperature on each day. 

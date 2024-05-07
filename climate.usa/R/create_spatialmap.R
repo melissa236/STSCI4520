@@ -3,6 +3,7 @@ library(ggplot2)
 library(maps)
 library(GpGp)
 library(sf)
+library(dplyr)
 
 
 create_usa_grid<- function(resolution = 1){
@@ -14,7 +15,7 @@ create_usa_grid<- function(resolution = 1){
   x_range<- seq(usa_polygon[1], usa_polygon[2], by = resolution)
   y_range<- seq(usa_polygon[3], usa_polygon[4], by = resolution)
   #generate grid points
-  grid_points<- expand.grid(LONGITUDE = x_range, LATITUDE = y_range)
+  grid_points<- expand.grid(LONGITUDE = y_range, LATITUDE = x_range)
   coords<- matrix(c(usa_polygon[1], usa_polygon[3], 
                    usa_polygon[1], usa_polygon[4], 
                   usa_polygon[2], usa_polygon[4], 
@@ -39,17 +40,27 @@ create_usa_grid<- function(resolution = 1){
   return(grid_points)
 }
 
-grid<-create_usa_grid(resolution = 2)
+grid<-create_usa_grid(resolution = 1)
 
 y<- dat[,"T_DAILY_AVG"]
 locs<-as.matrix(dat[,c("LONGITUDE","LATITUDE")])
 x<-model.matrix(~ LONGITUDE + LATITUDE, data = dat)
 
 
-lms<- fit_model(y, locs, x, covfun_name = "matern_sphere",silent = TRUE)
 
+station_data<- dat |>
+  group_by(STATION_NAME)|>
+  na.omit()|>
+  summarise(LONGITUDE = mean(LONGITUDE), 
+            LATITUDE = mean(LATITUDE),
+            T_DAILY_AVG = mean(T_DAILY_AVG))
 
-interpolate_to_grid<- function(grid_points, model_fit){
+interpolate_to_grid<- function(station_data, grid_points, variable){
+  y<-as.matrix(station_data[,variable])
+  locs<- as.matrix(station_data[,c("LONGITUDE", "LATITUDE")])
+  x<- model.matrix(~LONGITUDE + LATITUDE, data = station_data)
+  
+  model_fit<- fit_model(y, locs, x, covfun_name = "matern_sphere",silent = TRUE)
   
   X_pred<- as.data.frame(cbind(rep(1,times = nrow(grid_points)),
             grid_points$LONGITUDE, grid_points$LATITUDE))
@@ -60,26 +71,24 @@ interpolate_to_grid<- function(grid_points, model_fit){
   
 }
 
-predictions<-interpolate_to_grid(grid_points = grid, model_fit = lms)
+predictions<-interpolate_to_grid(grid_points = grid, 
+                                 station_data = station_data, variable = "T_DAILY_AVG")
 usa_map <- map_data("state")
 usa_map <- usa_map[!usa_map$region %in% c("alaska", "hawaii"),]
 
 
 grid_points <- create_usa_grid(resolution = 1)
-interpolation<- interpolate_to_grid(grid_points, "T_DAILY_AVG")
 
+  
 
 create_map<- function(predictions, grid_points){
-  num_lon <- length(unique(grid_points$LONGITUDE))
-  num_lat <- length(unique(grid_points$LATITUDE))
+  num_lat<- length(unique(grid_points$LATITUDE))
+  num_lon<- length(unique(grid_points$LONGITUDE))
   
-  unique_lon<- unique(grid_points$LONGITUDE)
-  unique_lat<- unique(grid_points$LATITUDE)
+  loc_matrix <- matrix(predictions, nrow = num_lon, ncol = num_lat, byrow = TRUE)
   
-  loc_matrix <- matrix(predictions, nrow = num_lat, ncol = num_lon, byrow = TRUE)
-  
-  image.plot(x = unique_lon, 
-             y = unique_lat,
+  image.plot(x = unique(grid_points$LATIUDE), 
+             y = unique(grid_points$LONGITUDE),
              z = loc_matrix,
              xlab = "Longitude", 
              ylab = "Latitude", 

@@ -26,7 +26,7 @@ temp_trend <- function(data, date_column, temp_column, degree = 2) {
     theme_minimal()
 }
 
-temp_trend(dat, "LST_DATE", "T_DAILY_AVG", 2)
+#temp_trend(dat, "LST_DATE", "T_DAILY_AVG", 2)
 
 
 

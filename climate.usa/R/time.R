@@ -24,8 +24,8 @@ get_time_series <- function(name, starting_date = NULL, ending_date = NULL) {
 
   return(station_data)
 }
-print(get_time_series("Asheville 13 S"))
-print(get_time_series("Asheville 13 S", "2005-01-03"))
-print(get_time_series("Asheville 13 S", "2006-01-03", "2009-01-03"))
-print(get_time_series("Asheville 8 SSW"))
+#print(get_time_series("Asheville 13 S"))
+#print(get_time_series("Asheville 13 S", "2005-01-03"))
+#print(get_time_series("Asheville 13 S", "2006-01-03", "2009-01-03"))
+#print(get_time_series("Asheville 8 SSW"))
 

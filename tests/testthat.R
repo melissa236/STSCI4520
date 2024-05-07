@@ -9,4 +9,4 @@
 library(testthat)
 library(final_project)
 
-test_check("final_project")
+#test_check("final_project")

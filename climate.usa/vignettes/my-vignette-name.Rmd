@@ -14,9 +14,13 @@ knitr::opts_chunk$set(
 )
 ```
 
+Load package
 ```{r setup}
 library(climate.usa)
+
 ```
+
+
 ```{r}
 get_all_stations_data <- function(starting_date, ending_date) {
   march_data <- dat %>%
@@ -25,7 +29,7 @@ get_all_stations_data <- function(starting_date, ending_date) {
 }
 
 march_2024_data <- get_all_stations_data("2024-03-01", "2024-03-31")
-station_data<- dat |>
+station_data<- march_2024_data |>
    group_by(STATION_NAME)|>
    na.omit()|>
    summarise(LONGITUDE = mean(LONGITUDE),

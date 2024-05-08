@@ -7,7 +7,7 @@
 yearly_cycle(station, year)
 }
 \arguments{
-\item{station}{station name contains the city name, station number, and station direction}
+\item{station}{name of the station; contains the city name, station number, and station direction}
 
 \item{year}{year in which the expected temperature on each day will be estimated}
 }

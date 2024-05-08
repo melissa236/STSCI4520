@@ -3,7 +3,7 @@
 #' Estimate the expected temperature on each day of the year
 #'for one USCRN/USRCRN weather station. 
 #'
-#' @param station station name contains the city name, station number, and station direction
+#' @param station name of the station; contains the city name, station number, and station direction
 #' @param year year in which the expected temperature on each day will be estimated
 #' @return a data frame with the following components:
 #' \itemize{

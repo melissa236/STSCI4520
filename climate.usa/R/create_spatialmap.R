@@ -15,12 +15,12 @@ create_usa_grid<- function(resolution = 1){
   y_range<- seq(usa_polygon[3], usa_polygon[4], by = resolution)
   #generate grid points
   grid_points<- expand.grid(LONGITUDE = x_range, LATITUDE = y_range)
- 
+
   return(grid_points)
 }
 
-# grid<-create_usa_grid(resolution = 1)
-# 
+#grid<-create_usa_grid(resolution = 1)
+
 # station_data<- dat |>
 #   group_by(STATION_NAME)|>
 #   na.omit()|>
@@ -46,7 +46,7 @@ interpolate_to_grid<- function(station_data, grid_points, variable){
 }
 
 #predictions<-interpolate_to_grid(grid_points = grid,
-                                # station_data = station_data, variable = "T_DAILY_AVG")
+                                #station_data = station_data, variable = "T_DAILY_AVG")
 
 
 create_map<- function(predictions, grid_points){

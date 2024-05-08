@@ -1,4 +1,4 @@
-#' Eextract the time series
+#' Extract the time series
 #'
 #' Eextract the time series for a specific station by station id.
 #'

@@ -11,7 +11,7 @@
 #' \item \code{type} curve of the temperature trend
 #' }
 #'@examples
-#'temp_trend(dat, "LST_DATE", "T_DAILY_AVG")
+#'temp_trend(dat, "LST_DATE", "T_DAILY_AVG", 2)
 
 
 temp_trend <- function(data, date_column, temp_column) {
@@ -28,13 +28,13 @@ temp_trend <- function(data, date_column, temp_column) {
   prediction_years$PREDICTED_TEMP <- predict(model, newdata = prediction_years)
 
   ggplot(prediction_years, aes(x = YEAR, y = PREDICTED_TEMP)) +
-    geom_line(color = "blue", size = 1.5) +
+    geom_line(color = "blue", linewidth = 1.5) +
     labs(title = "Yearly Temperature Trend Model (Polynomial Regression)",
          x = "Year", y = "Temperature (°C)") +
     theme_minimal()
 }
 
-#temp_trend(dat, "LST_DATE", "T_DAILY_AVG")
+temp_trend(dat, "LST_DATE", "T_DAILY_AVG")
 
 
 
